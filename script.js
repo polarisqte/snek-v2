@@ -48,9 +48,14 @@ function getHighscore() {
   return localStorage.getItem("highscore") || 0;
 }
 
+highscoreElement.textContent = `highscore: ${getHighscore()}`;
+
 function saveHighscore() {
   if (score > getHighscore()) {
     localStorage.setItem("highscore", score);
+
+    highscoreElement.textContent = `NEW! highscore: ${getHighscore()}`;
+    highscoreElement.classList.add("highlight");
   }
 }
 
@@ -82,6 +87,7 @@ function initGame() {
   for (let i = 0; i < FOOD_COUNT; i++) spawnFood();
   scoreElement.textContent = `score: ${score}`;
   highscoreElement.textContent = `highscore: ${getHighscore()}`;
+  highscoreElement.classList.remove("highlight");
 }
 
 function spawnFood() {
