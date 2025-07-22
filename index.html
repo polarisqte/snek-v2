@@ -24,7 +24,119 @@
         </div>
       </div>
 
-      <div id="settings-window"></div>
+      <div id="settings-window">
+        <button id="settings-btn" class="btn no-bg">
+          &lt; open settings &gt;
+        </button>
+
+        <div id="settings-list" style="display: none">
+          <div id="settings-lock" style="display: none">
+            unavailable during gameplay
+          </div>
+
+          <span class="settings-title">settings</span>
+          <span class="settings-subtitle">// size</span>
+          <div class="settings-entry">
+            <div class="settings-entry-title">grid size</div>
+            <div id="grid-size" class="settings-btn-multiple-choice">
+              <button
+                class="settings-btn-multiple-choice-btn left"
+                data-value="small"
+              >
+                small
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn"
+                data-value="medium"
+              >
+                medium
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn right"
+                data-value="large"
+              >
+                large
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-entry">
+            <div class="settings-entry-title">canvas size</div>
+            <div id="canvas-size" class="settings-btn-multiple-choice">
+              <button
+                class="settings-btn-multiple-choice-btn left"
+                data-value="small"
+              >
+                small
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn"
+                data-value="medium"
+              >
+                medium
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn right"
+                data-value="large"
+              >
+                large
+              </button>
+            </div>
+          </div>
+
+          <span class="settings-subtitle">// food</span>
+
+          <div class="settings-entry">
+            <div class="settings-entry-title">food count</div>
+            <div id="food-count" class="settings-btn-multiple-choice">
+              <button
+                class="settings-btn-multiple-choice-btn left"
+                data-value="one"
+              >
+                one
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn"
+                data-value="three"
+              >
+                three
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn right"
+                data-value="five"
+              >
+                five
+              </button>
+            </div>
+          </div>
+
+          <span class="settings-subtitle">// game</span>
+
+          <div class="settings-entry">
+            <div class="settings-entry-title">game speed</div>
+            <div id="game-speed" class="settings-btn-multiple-choice">
+              <button
+                class="settings-btn-multiple-choice-btn left"
+                data-value="slow"
+              >
+                slow
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn"
+                data-value="default"
+              >
+                default
+              </button>
+              <button
+                class="settings-btn-multiple-choice-btn right"
+                data-value="fast"
+              >
+                fast
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="settings.js"></script>

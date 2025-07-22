@@ -8,7 +8,7 @@ const overlayElement = document.getElementById("game-canvas-overlay");
 const overlayTitle = document.getElementById("overlay-title");
 const overlaySubtilte = document.getElementById("overlay-subtitle");
 
-GameSettings.load();
+const settingsLock = document.getElementById("settings-lock");
 
 let gameRunning = false;
 let directionQueue = [];
@@ -63,7 +63,11 @@ function initGame() {
   canvas.width = width;
   canvas.height = height;
 
-  snake = [{ x: 10, y: 10 }];
+  const gridSize = parseInt(GameSettings.get("GRID_SIZE"));
+  const startX = Math.floor(width / gridSize / 2);
+  const startY = Math.floor(height / gridSize / 2);
+
+  snake = [{ x: startX, y: startY }];
   previousSnake = [];
   directionQueue = [];
   direction = { x: 1, y: 0 };
@@ -202,6 +206,7 @@ function startGame() {
   toggleOverlay(false);
   initGame();
   requestAnimationFrame(gameLoop);
+  settingsLock.style.display = "flex";
 }
 
 function endGame() {
@@ -211,6 +216,8 @@ function endGame() {
     title: "game over",
     subtitle: "press space to try again",
   });
+
+  settingsLock.style.display = "none";
 }
 
 window.addEventListener("keydown", (e) => {

@@ -59,3 +59,102 @@ window.GameSettings = {
     this.save();
   },
 };
+
+let settingsBase = {
+  GRID_SIZE: {
+    element: document.getElementById("grid-size"),
+    values: {
+      small: 10,
+      medium: 20,
+      large: 30,
+    },
+  },
+
+  CANVAS_WIDTH: {
+    element: document.getElementById("canvas-size"),
+    values: {
+      small: 400,
+      medium: 600,
+      large: 800,
+    },
+  },
+
+  CANVAS_HEIGHT: {
+    element: document.getElementById("canvas-size"),
+    values: {
+      small: 400,
+      medium: 600,
+      large: 800,
+    },
+  },
+
+  FOOD_COUNT: {
+    element: document.getElementById("food-count"),
+    values: {
+      one: 1,
+      three: 3,
+      five: 5,
+    },
+  },
+
+  GAME_SPEED: {
+    element: document.getElementById("game-speed"),
+    values: {
+      slow: 0.125,
+      default: 0.1,
+      fast: 0.075,
+    },
+  },
+};
+
+let settingsOpen = false;
+
+let settingsButton = document.getElementById("settings-btn");
+let settingsList = document.getElementById("settings-list");
+
+function toggleSettingsWindow() {
+  if (settingsOpen) {
+    settingsOpen = false;
+    settingsList.style.display = "none";
+    settingsButton.textContent = "< open settings >";
+  } else {
+    settingsOpen = true;
+    settingsList.style.display = "flex";
+    settingsButton.textContent = "< close settings >";
+  }
+}
+
+settingsButton.addEventListener("click", toggleSettingsWindow);
+
+function updateSettingsHighlights() {
+  Object.entries(settingsBase).forEach(([key, { element, values }]) => {
+    const currentValue = GameSettings.get(key);
+
+    Array.from(element.querySelectorAll("button")).forEach((button) => {
+      const label = button.dataset.value;
+      const value = values[label];
+
+      if (String(value) === String(currentValue)) {
+        button.classList.add("settings-hl");
+      } else {
+        button.classList.remove("settings-hl");
+      }
+    });
+  });
+}
+
+Object.entries(settingsBase).forEach(([key, { element, values }]) => {
+  element.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const label = button.dataset.value;
+      const value = values[label];
+
+      GameSettings.set(key, value);
+      updateSettingsHighlights();
+    });
+  });
+});
+
+GameSettings.load();
+
+updateSettingsHighlights();

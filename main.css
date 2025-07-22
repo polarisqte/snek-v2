@@ -4,6 +4,7 @@
     --color-bg-primary: #000000;
     --color-text-primary: #46fb73;
     --color-text-glow: rgba(70, 251, 115, 0.4);
+    --color-text-glow-highlight: rgba(70, 251, 115, 1);
     --color-canvas-bg: #0b0b0b;
 
     --color-canvas-test: #3fdb66;
@@ -64,7 +65,7 @@ html, body {
 
 #settings-window {
     min-height: 400px;
-    width: 400px;
+    width: 600px;
 
     position: absolute;
     left: 100%;
@@ -159,4 +160,150 @@ html, body {
 
     background-color: var(--color-canvas-bg);
     border: 1px solid var(--color-text-primary);
+}
+
+
+/* SETTINGS STUFF */
+#settings-window {
+    color: var(--color-text-primary);
+}
+
+.btn {
+    all: unset;
+
+    width: 100%;
+    height: 2rem;
+
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-primary);
+
+    padding: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+
+    font-size: 1.4rem;
+}
+
+.btn:hover {
+    cursor: pointer;
+
+    box-shadow: 0 0 20px var(--color-text-glow-highlight);
+}
+
+.no-bg {
+    background-color: transparent;
+    color: var(--color-text-primary);
+}
+
+.no-bg:hover {
+    text-shadow: 0 0 20px var(--color-text-glow-highlight);
+    box-shadow: none;
+}
+
+#settings-list {
+    width: 100%;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    gap: 1rem;
+}
+
+.settings-title {
+    height: 3rem;
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 2.4rem;
+}
+
+.settings-subtitle {
+    height: 2rem;
+    width: 100%;
+    font-size: 1.8rem;
+
+    text-align: left;
+}
+
+.settings-entry {
+    width: 100%;
+    height: 2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-entry-title {
+    font-size: 1.4rem;
+}
+
+.settings-btn-multiple-choice {
+    height: 100%;
+
+    border: 2px solid var(--color-text-primary);
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+.settings-btn-multiple-choice-btn {
+    all: unset;
+
+    height: 100%;
+
+    font-size: 1.2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.settings-btn-multiple-choice-btn:hover {
+    cursor: pointer;
+}
+
+.settings-hl {
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-primary);
+}
+
+.left {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.right {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#settings-lock {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 2rem;
+
+    z-index: 150;
 }
