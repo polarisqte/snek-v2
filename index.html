@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
+    <div id="page-wrapper">
+      <div id="game-window">
+        <span class="game-title">snek v2</span>
+        <div id="score-holder">
+          <span id="game-score">score: 0</span>
+          <span id="game-highscore">highscore: 0</span>
+        </div>
+
+        <div id="game-canvas-holder" style="width: 600px; height: 600px">
+          <div id="game-canvas-overlay">
+            <span id="overlay-title">start the game</span>
+            <span id="overlay-subtitle">press space to begin</span>
+          </div>
+          <canvas id="game-canvas"></canvas>
+        </div>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
