@@ -57,6 +57,16 @@ function saveHighscore() {
 function increaseScore() {
   score++;
   scoreElement.textContent = `score: ${score}`;
+
+  scoreElement.classList.add("bump");
+
+  scoreElement.addEventListener(
+    "animationend",
+    () => {
+      scoreElement.classList.remove("bump");
+    },
+    { once: true }
+  );
 }
 
 function initGame() {
