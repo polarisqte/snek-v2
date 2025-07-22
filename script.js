@@ -222,6 +222,7 @@ function endGame() {
 
 window.addEventListener("keydown", (e) => {
   if (e.code === "Space") {
+    e.preventDefault();
     startGame();
     return;
   }

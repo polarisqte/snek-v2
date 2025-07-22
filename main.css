@@ -25,6 +25,7 @@ html, body {
     width: 100vw;
 
     margin: 0;
+    overflow: hidden;
 
     background-color: var(--color-bg-primary);
     font-family: "Bitcount";
@@ -276,11 +277,17 @@ html, body {
 
 .settings-btn-multiple-choice-btn:hover {
     cursor: pointer;
+    text-shadow: 0 0 20px var(--color-text-glow-highlight);
 }
 
 .settings-hl {
     background-color: var(--color-text-primary);
     color: var(--color-bg-primary);
+}
+
+.settings-hl:hover {
+    text-shadow: none;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .left {
