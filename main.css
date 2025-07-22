@@ -36,18 +36,40 @@ html, body {
 
 #page-wrapper {
     height: 100%;
-    width: 100%;
+
+    position: relative;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    gap: 40px;
 }
 
 #game-window {
+    position: relative;
+
     min-height: 600px;
     width: 600px;
 
     color: var(--color-text-primary);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+#settings-window {
+    min-height: 400px;
+    width: 400px;
+
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translate(5rem);
 
     display: flex;
     flex-direction: column;

@@ -8,19 +8,6 @@ const overlayElement = document.getElementById("game-canvas-overlay");
 const overlayTitle = document.getElementById("overlay-title");
 const overlaySubtilte = document.getElementById("overlay-subtitle");
 
-let GRID_SIZE = 20;
-let CANVAS_WIDTH = 600;
-let CANVAS_HEIGHT = 600;
-
-let FOOD_COUNT = 3;
-
-let FOOD_COLOR = "red";
-let SNAKE_COLOR = "#46fb73";
-let SNAKE_HEAD = "#3fdb66";
-
-let GAME_SPEED = 0.1;
-let MOVE_INTERVAL = 120;
-
 let gameRunning = false;
 let directionQueue = [];
 
@@ -35,10 +22,8 @@ let snake,
 function toggleOverlay(state, data) {
   if (state) {
     overlayElement.style.display = "flex";
-    overlayTitle.textContent = data.title ? data.title : "start the game";
-    overlaySubtilte.textContent = data.subtitle
-      ? data.subtitle
-      : "press space to begin";
+    overlayTitle.textContent = data.title || "start the game";
+    overlaySubtilte.textContent = data.subtitle || "press space to begin";
   } else {
     overlayElement.style.display = "none";
   }
@@ -53,7 +38,6 @@ highscoreElement.textContent = `highscore: ${getHighscore()}`;
 function saveHighscore() {
   if (score > getHighscore()) {
     localStorage.setItem("highscore", score);
-
     highscoreElement.textContent = `NEW! highscore: ${getHighscore()}`;
     highscoreElement.classList.add("highlight");
   }
@@ -62,21 +46,20 @@ function saveHighscore() {
 function increaseScore() {
   score++;
   scoreElement.textContent = `score: ${score}`;
-
   scoreElement.classList.add("bump");
-
   scoreElement.addEventListener(
     "animationend",
-    () => {
-      scoreElement.classList.remove("bump");
-    },
+    () => scoreElement.classList.remove("bump"),
     { once: true }
   );
 }
 
 function initGame() {
-  canvas.width = CANVAS_WIDTH;
-  canvas.height = CANVAS_HEIGHT;
+  const width = parseInt(GameSettings.get("CANVAS_WIDTH"));
+  const height = parseInt(GameSettings.get("CANVAS_HEIGHT"));
+
+  canvas.width = width;
+  canvas.height = height;
 
   snake = [{ x: 10, y: 10 }];
   previousSnake = [];
@@ -84,19 +67,25 @@ function initGame() {
   direction = { x: 1, y: 0 };
   score = 0;
   food = [];
-  for (let i = 0; i < FOOD_COUNT; i++) spawnFood();
+
+  const foodCount = parseInt(GameSettings.get("FOOD_COUNT"));
+  for (let i = 0; i < foodCount; i++) spawnFood();
+
   scoreElement.textContent = `score: ${score}`;
   highscoreElement.textContent = `highscore: ${getHighscore()}`;
   highscoreElement.classList.remove("highlight");
 }
 
 function spawnFood() {
-  let newFood;
+  const gridSize = parseInt(GameSettings.get("GRID_SIZE"));
+  const width = parseInt(GameSettings.get("CANVAS_WIDTH"));
+  const height = parseInt(GameSettings.get("CANVAS_HEIGHT"));
 
+  let newFood;
   do {
     newFood = {
-      x: Math.floor((Math.random() * CANVAS_WIDTH) / GRID_SIZE),
-      y: Math.floor((Math.random() * CANVAS_HEIGHT) / GRID_SIZE),
+      x: Math.floor((Math.random() * width) / gridSize),
+      y: Math.floor((Math.random() * height) / gridSize),
     };
   } while (
     snake.some((s) => s.x === newFood.x && s.y === newFood.y) ||
@@ -123,22 +112,29 @@ function updateSnakePosition() {
     y: snake[0].y + direction.y,
   };
 
+  const gridSize = parseInt(GameSettings.get("GRID_SIZE"));
+  const width = parseInt(GameSettings.get("CANVAS_WIDTH"));
+  const height = parseInt(GameSettings.get("CANVAS_HEIGHT"));
+
   if (
     newHead.x < 0 ||
     newHead.y < 0 ||
-    newHead.x >= CANVAS_WIDTH / GRID_SIZE ||
-    newHead.y >= CANVAS_HEIGHT / GRID_SIZE
-  )
+    newHead.x >= width / gridSize ||
+    newHead.y >= height / gridSize
+  ) {
     return endGame();
+  }
 
-  if (snake.some((s, i) => i && s.x === newHead.x && s.y === newHead.y))
+  if (snake.some((s, i) => i && s.x === newHead.x && s.y === newHead.y)) {
     return endGame();
+  }
 
   snake.unshift(newHead);
 
   const eatenIndex = food.findIndex(
     (f) => f.x === newHead.x && f.y === newHead.y
   );
+
   if (eatenIndex > -1) {
     increaseScore();
     food.splice(eatenIndex, 1);
@@ -149,13 +145,24 @@ function updateSnakePosition() {
 }
 
 function drawGame() {
-  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  const gridSize = parseInt(GameSettings.get("GRID_SIZE"));
+  const moveInterval = parseInt(GameSettings.get("MOVE_INTERVAL"));
+  const foodColor = GameSettings.get("FOOD_COLOR");
+  const snakeColor = GameSettings.get("SNAKE_COLOR");
+  const snakeHead = GameSettings.get("SNAKE_HEAD_COLOR");
 
-  const delta = (performance.now() - lastTime) / MOVE_INTERVAL;
+  ctx.clearRect(
+    0,
+    0,
+    parseInt(GameSettings.get("CANVAS_WIDTH")),
+    parseInt(GameSettings.get("CANVAS_HEIGHT"))
+  );
 
-  ctx.fillStyle = FOOD_COLOR;
+  const delta = (performance.now() - lastTime) / moveInterval;
+
+  ctx.fillStyle = foodColor;
   food.forEach((f) => {
-    ctx.fillRect(f.x * GRID_SIZE, f.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+    ctx.fillRect(f.x * gridSize, f.y * gridSize, gridSize, gridSize);
   });
 
   for (let i = 0; i < snake.length; i++) {
@@ -165,22 +172,19 @@ function drawGame() {
     const interpX = prev.x + (curr.x - prev.x) * delta;
     const interpY = prev.y + (curr.y - prev.y) * delta;
 
-    ctx.fillStyle = i === 0 ? SNAKE_HEAD : SNAKE_COLOR;
-    ctx.fillRect(
-      interpX * GRID_SIZE,
-      interpY * GRID_SIZE,
-      GRID_SIZE,
-      GRID_SIZE
-    );
+    ctx.fillStyle = i === 0 ? snakeHead : snakeColor;
+    ctx.fillRect(interpX * gridSize, interpY * gridSize, gridSize, gridSize);
   }
 }
 
 function gameLoop(timestamp) {
   if (!gameRunning) return;
 
+  const moveInterval = parseInt(GameSettings.get("MOVE_INTERVAL"));
+
   if (!lastTime) lastTime = timestamp;
 
-  if (timestamp - lastTime >= MOVE_INTERVAL) {
+  if (timestamp - lastTime >= moveInterval) {
     updateSnakePosition();
     lastTime = timestamp;
   }
@@ -200,7 +204,6 @@ function startGame() {
 
 function endGame() {
   gameRunning = false;
-
   saveHighscore();
   toggleOverlay(true, {
     title: "game over",
