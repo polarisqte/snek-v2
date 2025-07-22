@@ -17,11 +17,15 @@ window.GameSettings = {
   load() {
     const saved = JSON.parse(localStorage.getItem("gameSettings"));
     if (saved) {
-      for (const key in saved) {
-        if (GameState[key]) {
-          GameState[key].value = saved[key];
+      for (const key in GameState) {
+        if (saved.hasOwnProperty(key)) {
+          GameState[key].value = String(saved[key]);
+        } else {
+          GameState[key].value = GameState[key].default;
         }
       }
+    } else {
+      this.reset();
     }
   },
 

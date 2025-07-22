@@ -8,6 +8,8 @@ const overlayElement = document.getElementById("game-canvas-overlay");
 const overlayTitle = document.getElementById("overlay-title");
 const overlaySubtilte = document.getElementById("overlay-subtitle");
 
+GameSettings.load();
+
 let gameRunning = false;
 let directionQueue = [];
 
