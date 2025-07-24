@@ -230,15 +230,19 @@ window.addEventListener("keydown", (e) => {
   let input = null;
   switch (e.key) {
     case "ArrowUp":
+    case "w":
       input = { x: 0, y: -1 };
       break;
     case "ArrowDown":
+    case "s":
       input = { x: 0, y: 1 };
       break;
     case "ArrowLeft":
+    case "a":
       input = { x: -1, y: 0 };
       break;
     case "ArrowRight":
+    case "d":
       input = { x: 1, y: 0 };
       break;
   }
