@@ -97,12 +97,12 @@ let settingsBase = {
     },
   },
 
-  GAME_SPEED: {
+  MOVE_INTERVAL: {
     element: document.getElementById("game-speed"),
     values: {
-      slow: 0.125,
-      default: 0.1,
-      fast: 0.075,
+      slow: 150,
+      default: 120,
+      fast: 90,
     },
   },
 };
