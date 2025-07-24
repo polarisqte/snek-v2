@@ -227,21 +227,23 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  const key = e.key.toLowerCase();
+
   let input = null;
-  switch (e.key) {
-    case "ArrowUp":
+  switch (key) {
+    case "arrowup":
     case "w":
       input = { x: 0, y: -1 };
       break;
-    case "ArrowDown":
+    case "arrowdown":
     case "s":
       input = { x: 0, y: 1 };
       break;
-    case "ArrowLeft":
+    case "arrowleft":
     case "a":
       input = { x: -1, y: 0 };
       break;
-    case "ArrowRight":
+    case "arrowright":
     case "d":
       input = { x: 1, y: 0 };
       break;
