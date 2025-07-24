@@ -275,15 +275,17 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-function toggleAudioOverlay(volume) {
+function toggleAudioOverlay() {
+  const volume = Number(GameSettings.get("VOLUME"));
+
   if (volume === 0) {
-    soundOverlay.style.display = "none";
-  } else {
     soundOverlay.style.display = "flex";
+  } else {
+    soundOverlay.style.display = "none";
   }
 }
 
-toggleAudioOverlay(GameSettings.get("VOLUME"));
+toggleAudioOverlay();
 
 soundBtn.addEventListener("click", () => {
   const vol = Number(GameSettings.get("VOLUME"));
@@ -294,5 +296,5 @@ soundBtn.addEventListener("click", () => {
     GameSettings.set("VOLUME", 0);
   }
 
-  toggleAudioOverlay(vol);
+  toggleAudioOverlay();
 });
