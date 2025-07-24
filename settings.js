@@ -11,6 +11,8 @@ window.GameState = {
 
   GAME_SPEED: { value: "0.1", default: "0.1" },
   MOVE_INTERVAL: { value: "120", default: "120" },
+
+  VOLUME: { value: "0.5", default: "0.5" },
 };
 
 window.GameSettings = {

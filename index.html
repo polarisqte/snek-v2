@@ -9,7 +9,27 @@
   <body>
     <div id="page-wrapper">
       <div id="game-window">
-        <span class="game-title">snek v2</span>
+        <div class="buttons-holder">
+          <div class="img-holder" id="sound-btn">
+            <img
+              src="media/img/music.png"
+              alt="Sounds"
+              title="Sounds"
+              style="height: 80%"
+            />
+            <div id="sound-overlay" class="x-overlay" style="display: none">
+              X
+            </div>
+          </div>
+          <div
+            class="img-holder"
+            id="credits-btn"
+            onclick="location.href='credits.html'"
+          >
+            <img src="media/img/credits.png" alt="Credits" title="Credits" />
+          </div>
+        </div>
+        <div class="game-title">snek v2</div>
         <div id="score-holder">
           <span id="game-score">score: 0</span>
           <span id="game-highscore">highscore: 0</span>

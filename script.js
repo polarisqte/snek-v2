@@ -10,6 +10,14 @@ const overlaySubtilte = document.getElementById("overlay-subtitle");
 
 const settingsLock = document.getElementById("settings-lock");
 
+const soundBtn = document.getElementById("sound-btn");
+const soundOverlay = document.getElementById("sound-overlay");
+
+const creditsBtn = document.getElementById("credits-btn");
+
+const eatSound = new Audio("media/audio/pickup.mp3");
+const deathSound = new Audio("media/audio/death.mp3");
+
 let gameRunning = false;
 let directionQueue = [];
 
@@ -20,6 +28,12 @@ let snake,
   score,
   gameInterval,
   lastTime = 0;
+
+function playSound(audio) {
+  const clone = audio.cloneNode();
+  clone.volume = GameSettings.get("VOLUME");
+  clone.play();
+}
 
 function toggleOverlay(state, data) {
   if (state) {
@@ -143,6 +157,7 @@ function updateSnakePosition() {
 
   if (eatenIndex > -1) {
     increaseScore();
+    playSound(eatSound);
     food.splice(eatenIndex, 1);
     spawnFood();
   } else {
@@ -211,6 +226,7 @@ function startGame() {
 
 function endGame() {
   gameRunning = false;
+  playSound(deathSound);
   saveHighscore();
   toggleOverlay(true, {
     title: "game over",
@@ -257,4 +273,26 @@ window.addEventListener("keydown", (e) => {
       }
     }
   }
+});
+
+function toggleAudioOverlay(volume) {
+  if (volume === 0) {
+    soundOverlay.style.display = "none";
+  } else {
+    soundOverlay.style.display = "flex";
+  }
+}
+
+toggleAudioOverlay(GameSettings.get("VOLUME"));
+
+soundBtn.addEventListener("click", () => {
+  const vol = Number(GameSettings.get("VOLUME"));
+
+  if (vol === 0) {
+    GameSettings.set("VOLUME", 0.5);
+  } else {
+    GameSettings.set("VOLUME", 0);
+  }
+
+  toggleAudioOverlay(vol);
 });
